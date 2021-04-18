@@ -1,36 +1,38 @@
-import React,{useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../../axios'
-import {useDispatch } from 'react-redux'
-import { createBookAction,fetchBookAction } from '../../redux/actions/books/bookActions'
+import { useDispatch } from 'react-redux'
+import { createBookAction, fetchBookAction } from '../../redux/actions/books/bookActions'
 const AddBook = () => {
-  const [category,setCategory] = useState('')
-  const [title,setTitle] = useState('')
-  const [author,setAuthor] = useState('')
-  
+  const [category, setCategory] = useState('')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
 
-    const dispatch = useDispatch()
 
-   
-    const handleFormSubmit = e =>{
-        e.preventDefault()
-        const data ={
-            category,
-            title,
-            author
-        }
-        dispatch(createBookAction(data))
-       
-        // dispatch(fetchBookAction())
+  const dispatch = useDispatch()
+  const passData = JSON.parse(localStorage.getItem('userAuthData'))
+
+  const handleFormSubmit = e => {
+    e.preventDefault()
+    const data = {
+      category,
+      title,
+      author,
+      createdBy: passData.user._id
+
     }
-    // useEffect(() => {
-    //   axios.get('/api/book-fetch',{
-    //     headers:{
-    //       'Content-Type':"application/json"
-    //   }
-    //   }) .then(data=>
-    //      console.log("fetching of data",data)
-    //     )
-    // }, [])
+    dispatch(createBookAction(data))
+
+    // dispatch(fetchBookAction())
+  }
+  // useEffect(() => {
+  //   axios.get('/api/book-fetch',{
+  //     headers:{
+  //       'Content-Type':"application/json"
+  //   }
+  //   }) .then(data=>
+  //      console.log("fetching of data",data)
+  //     )
+  // }, [])
 
   return (
     <div className='row container-height'>
@@ -70,7 +72,7 @@ const AddBook = () => {
                     <fieldset>
                       <div className='form-group'>
                         <select value={category}
-                         onChange={e=>setCategory(e.target.value)}
+                          onChange={e => setCategory(e.target.value)}
                           className='custom-select'>
                           <option defaultValue='programming'>
                             programming
@@ -83,7 +85,7 @@ const AddBook = () => {
                       <div className='form-group'>
                         <label htmlFor='exampleInputEmail1'>Author </label>
                         <input value={author}
-                        onChange={e=>setAuthor(e.target.value)}
+                          onChange={e => setAuthor(e.target.value)}
                           type='text'
                           className='form-control'
                           id='exampleInputEmail1'
@@ -94,7 +96,7 @@ const AddBook = () => {
                       <div className='form-group'>
                         <label htmlFor='exampleInputPassword1'>title</label>
                         <input value={title}
-                            onChange = {e=>setTitle(e.target.value)}
+                          onChange={e => setTitle(e.target.value)}
                           type='text'
                           className='form-control'
                           id='exampleInputPassword1'

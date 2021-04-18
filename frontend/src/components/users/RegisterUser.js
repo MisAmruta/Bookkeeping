@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUserAction } from '../../redux/actions/users/userActions';
+import ErrorMessage from '../ErrorMessage'
+import { useHistory } from 'react-router-dom'
 
-const RegisterUser = ({history})=>{
-    const [name,setName] = useState('');
-    const [email, setEmail] = useState('');
+const RegisterUser = ({ history }) => {
+  const historyHook = useHistory();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector(state=> state.userLogin)
+  const userLogin = useSelector(state => state.userLogin)
 
-  const { userInfo } = userLogin;
-  // console.log(userInfo)
+  const { loading, userInfo, error } = userLogin;
+
+
 
   useEffect(() => {
     if (userInfo) {
-      history.push('/login');
+      historyHook.push('/login');
     }
   }, [userInfo]);
 
@@ -24,6 +28,7 @@ const RegisterUser = ({history})=>{
     e.preventDefault();
     //disptach action here
     dispatch(registerUserAction(name, email, password));
+
   };
 
   return (
@@ -31,7 +36,8 @@ const RegisterUser = ({history})=>{
       <div className='col-lg-6 col-md-6 m-auto'>
         <div className='container'>
           <h1 className='text-center'>Register</h1>
-
+          {loading && <h1>Loading</h1>}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
           <form onSubmit={formSubmitHandler}>
             <fieldset>
               <div className='form-group'>

@@ -20,7 +20,7 @@ const Navbar = props => {
     <header>
       <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
         <a className='navbar-brand' to='/'>
-          BK
+          Book Keeping
         </a>
         <button
           className='navbar-toggler'
@@ -53,7 +53,7 @@ const Navbar = props => {
                   </Link>
                 </li>
               </>
-            ) : ( 
+            ) : (
               <>
                 <li className='nav-item'>
                   <Link className='nav-link' to='/books'>
@@ -86,7 +86,7 @@ const Navbar = props => {
                   </Link>
                 </li>
               </>
-             )}  
+            )}
           </ul>
         </div>
       </nav>
